@@ -11,3 +11,10 @@ const movie = await movieModel.getById(11);
 // console.log(movie);
 console.log(movie.name + ' - ' + movie.release.toLocaleDateString());
 console.log();
+
+
+console.log(chalk.blue(' • Affiche tous les films : '));
+
+const movies = await movieModel.getAll();
+console.log(movies);
+console.log();

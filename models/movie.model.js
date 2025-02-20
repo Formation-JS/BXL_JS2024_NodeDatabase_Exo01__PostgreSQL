@@ -41,8 +41,28 @@ const movieModel = {
 
 
     // Obtenir la liste des films.
-    getAll : () => {
-        throw Error('Not implemented !');
+    getAll : async () => {
+        const pool = new pg.Pool({
+            host: process.env.PGHOST,
+            port: process.env.PGPORT,
+            user: process.env.PGUSER,
+            password: process.env.PGPASSWORD,
+            database: process.env.PGDATABASE,
+            connectionTimeoutMillis: 15_000,
+            max: 25
+        });
+
+        const result = await pool.query(`
+            SELECT M."Id", M."Name", G."Name" AS "Genre"
+            FROM "Movie" M
+                JOIN "Genre" G ON M."GenreId" = G."Id"
+        `);
+
+        return result.rows.map((movie) => ({
+            id: movie.Id,
+            name: movie.Name,
+            genre: movie.Genre
+        }));
     },
 
     // Ajouter un nouveau film.
