@@ -1,0 +1,25 @@
+{
+  "name": "exo01-pg",
+  "version": "0.0.1",
+  "description": "Utilisation de PostgreSQL en Node",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "dev": "node --env-file=.env --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Formation-JS/BXL_JS2024_NodeDatabase_Exo01__PostgreSQL.git"
+  },
+  "author": "Aurélien St",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Formation-JS/BXL_JS2024_NodeDatabase_Exo01__PostgreSQL/issues"
+  },
+  "homepage": "https://github.com/Formation-JS/BXL_JS2024_NodeDatabase_Exo01__PostgreSQL#readme",
+  "dependencies": {
+    "pg": "^8.13.3"
+  }
+}
