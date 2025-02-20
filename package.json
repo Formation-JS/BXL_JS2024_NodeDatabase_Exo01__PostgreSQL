@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node --env-file=.env index.js",
     "dev": "node --env-file=.env --watch index.js",
+    "init-db": "node --env-file=.env tools/init-db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/Formation-JS/BXL_JS2024_NodeDatabase_Exo01__PostgreSQL#readme",
   "dependencies": {
+    "chalk": "^5.4.1",
     "pg": "^8.13.3"
   }
 }
