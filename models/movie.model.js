@@ -134,8 +134,23 @@ const movieModel = {
     },
 
     // Supprimer un film.
-    delete : () => {
-        throw Error('Not implemented !');
+    delete : async (movieId) => {
+        const pool = new pg.Pool({
+            host: process.env.PGHOST,
+            port: process.env.PGPORT,
+            user: process.env.PGUSER,
+            password: process.env.PGPASSWORD,
+            database: process.env.PGDATABASE,
+            connectionTimeoutMillis: 15_000,
+            max: 25
+        });
+
+        const movieDeleted = await pool.query({
+            text: 'DELETE FROM "Movie" WHERE "Id" = $1',
+            values: [movieId]
+        });
+
+        return movieDeleted.rowCount == 1;
     }
 };
 

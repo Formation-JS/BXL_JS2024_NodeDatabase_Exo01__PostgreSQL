@@ -32,3 +32,15 @@ const movieInserted = await movieModel.create({
 });
 console.log(movieInserted);
 console.log();
+
+
+console.log(chalk.blue(' • Supprimer un film : '));
+
+const targetId = movieInserted.id;
+
+console.log(await movieModel.getById(targetId));
+const isDeleted = await movieModel.delete(targetId);
+console.log(`New movie is delete : ${isDeleted}`);
+console.log(await movieModel.getById(targetId));
+console.log();
+
