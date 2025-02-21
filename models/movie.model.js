@@ -39,7 +39,6 @@ const movieModel = {
         }
     },
 
-
     // Obtenir la liste des films.
     getAll : async () => {
         const pool = new pg.Pool({
@@ -157,6 +156,40 @@ const movieModel = {
         return movieUpdated.rowCount == 1;
     },
 
+    partialUpdate : async (movieId, data = { name: undefined, desc: undefined, release: undefined, duration: undefined, rating: undefined }) => {
+        const pool = new pg.Pool({
+            host: process.env.PGHOST,
+            port: process.env.PGPORT,
+            user: process.env.PGUSER,
+            password: process.env.PGPASSWORD,
+            database: process.env.PGDATABASE,
+            connectionTimeoutMillis: 15_000,
+            max: 25
+        });
+
+        const dataEntries = Object.entries(data).filter(([key, value]) => value !== undefined);
+        let querySet  = '';
+        let i = 1;
+        
+        for(const [key, value] of dataEntries) {
+            const column = key[0].toUpperCase() + key.slice(1) 
+            querySet += `"${column}" = $${i}, `;
+            i++;
+        }
+
+        const movieUpdated = await pool.query({
+            text: `
+                UPDATE "Movie"
+                 SET ${querySet}
+                     "UpdatedDate" = CURRENT_TIMESTAMP
+                 WHERE "Id" = $${i}
+            `,
+            values: [dataEntries.map(([key, value]) => value), movieId]
+        });
+        
+        return movieUpdated.rowCount == 1;
+    },
+
     // Supprimer un film.
     delete : async (movieId) => {
         const pool = new pg.Pool({
@@ -179,3 +212,6 @@ const movieModel = {
 };
 
 export default movieModel;
+
+
+
