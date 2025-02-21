@@ -44,3 +44,15 @@ console.log(`New movie is delete : ${isDeleted}`);
 console.log(await movieModel.getById(targetId));
 console.log();
 
+
+console.log(chalk.blue(' • Mettre à jour un film : '));
+
+const updateData = {
+  name: 'Update movie!',
+  desc: 'Exemple dde mise à jours',
+  release: new Date(2002, 0, 1),
+  duration: 999,
+  rating: 1,
+}
+const isUpdated = await movieModel.update(2, updateData);
+console.log(`Movie is update : ${isDeleted}`);

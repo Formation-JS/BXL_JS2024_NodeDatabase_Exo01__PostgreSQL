@@ -129,8 +129,32 @@ const movieModel = {
     },
 
     // Modifier un film.
-    update : () => {
-        throw Error('Not implemented !');
+    update : async (movieId, { name, desc, release, duration, rating }) => {
+        const pool = new pg.Pool({
+            host: process.env.PGHOST,
+            port: process.env.PGPORT,
+            user: process.env.PGUSER,
+            password: process.env.PGPASSWORD,
+            database: process.env.PGDATABASE,
+            connectionTimeoutMillis: 15_000,
+            max: 25
+        });
+
+        const movieUpdated = await pool.query({
+            text: `
+                UPDATE "Movie"
+                 SET "Name" = $1,
+                     "Description" = $2,
+                     "ReleaseDate" = $3,
+                     "Duration" = $4,
+                     "Rating" = $5,
+                     "UpdatedDate" = CURRENT_TIMESTAMP
+                 WHERE "Id" = $6
+            `,
+            values: [name, desc, release, duration, rating, movieId]
+        });
+        
+        return movieUpdated.rowCount == 1;
     },
 
     // Supprimer un film.
